@@ -1,0 +1,1 @@
+"use strict";function displayCurrentRepo(a){var b=$(".repo-name h5");b.html(a.repoName)}chrome.extension.sendRequest({method:"getPageData"},function(a){displayCurrentRepo(a)});

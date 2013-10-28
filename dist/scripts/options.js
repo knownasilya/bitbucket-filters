@@ -1,0 +1,1 @@
+"use strict";function save(){var a,b=document.getElementById("assignee");localStorage.assignee=b.value,a=document.getElementById("status"),a.innerHTML="Options Saved.",setTimeout(function(){a.innerHTML=""},750)}function init(){document.querySelector("#save").addEventListener("click",save)}document.addEventListener("DOMContentLoaded",init);
