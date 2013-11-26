@@ -3,6 +3,12 @@ Bitbucket-Issue-Filters
 
 Chrome Extension for adding custom filters to Bitbucket Issues
 
+If you're thankful for this extension, I'd appreciate a tip :smile: 
+
+<script data-gittip-username="knownasilya"
+        data-gittip-widget="button"
+        src="//gttp.co/v1.js"></script>
+
 ### Building
 
 Requirements Node/npm.
