@@ -51,7 +51,11 @@ chrome.extension.sendRequest({method: "getOptions"}, function(response) {
   insertLink(response);
 });
 
-chrome.extension.sendMessage({ 
-  action: "getPageData",
-  pageName: getRepoName()
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) { 
+  if (message === 'getPageData') {
+    sendResponse({
+      action: "getPageData",
+      pageName: getRepoName()
+    });
+  }
 });
