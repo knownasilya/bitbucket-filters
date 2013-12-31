@@ -2,12 +2,30 @@
 <html>
     <head>
         <link href="styles/main.css" rel="stylesheet">
+        <style>
+          #filter {
+            display: block;
+          }
+
+          ul li {
+            list-item-type: none;
+          }
+
+          ul span {
+            font-weight: bold;
+            margin-right: 0.5em;
+          }
+        </style>
     </head>
     <body>
         <!-- CHROME EXTENSION POPUP -->
         <div id="repo-name">
           <h5></h5>
         </div>
+
+        <input type="text" id="filter" placeholder="Current Filter">
+
+        <button type="submit" id="add-filter">Add Filter</button>
 
         <!-- build:js scripts/popup.js -->
         <script src="bower_components/jquery/jquery.min.js"></script>
