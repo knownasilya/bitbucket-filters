@@ -7,11 +7,11 @@ function save () {
   localStorage['assignee'] = assignee.value;
   
   // Update status to let user know options were saved.
-  status = document.getElementById("status");
-  status.innerHTML = "Options Saved.";
+  status = document.getElementById('status');
+  status.innerHTML = 'Options Saved.';
 
   setTimeout(function() {
-    status.innerHTML = "";
+    status.innerHTML = '';
   }, 750);
 }
 

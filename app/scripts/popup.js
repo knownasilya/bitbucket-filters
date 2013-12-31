@@ -1,9 +1,9 @@
 'use strict';
 
 function displayCurrentRepo (data) {
-  var $repoName = $('#repo-name h5');
+  var $repoName = document.querySelector('#repo-name h5');
 
-  $repoName.text(data.pageName);
+  $repoName.textContent = data.pageName;
 }
 
 chrome.tabs.query({ active: true }, function (tabResults) {
@@ -28,7 +28,7 @@ chrome.tabs.query({ active: true }, function (tabResults) {
 
 chrome.extension.onMessage.addListener(function(request, sender) {
   console.log('on request');
-  if (request.action == "getPageData") {
+  if (request.action == 'getPageData') {
     displayCurrentRepo(request.pageName);
   }
   else {

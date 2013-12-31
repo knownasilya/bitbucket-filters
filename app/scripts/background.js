@@ -8,7 +8,7 @@ chrome.tabs.onUpdated.addListener(function (tabId) {
     chrome.pageAction.show(tabId);
 });
 
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
   if (request.method == "getOptions") {
     sendResponse({ assignee: localStorage['assignee'] });
   }
