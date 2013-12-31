@@ -100,7 +100,7 @@ chrome.tabs.query({ active: true }, function (tabResults) {
 
 chrome.extension.onMessage.addListener(function(request, sender) {
   console.log('on request');
-  if (request.action == "getPageData") {
+  if (request.action == 'getPageData') {
     displayCurrentRepo(request.pageName);
   }
   else {
