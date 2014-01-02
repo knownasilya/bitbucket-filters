@@ -1,35 +1,26 @@
 <!doctype html>
 <html>
     <head>
-        <link href="styles/main.css" rel="stylesheet">
-        <style>
-          #filter {
-            display: block;
-          }
-
-          ul li {
-            list-item-type: none;
-          }
-
-          ul span {
-            font-weight: bold;
-            margin-right: 0.5em;
-          }
-        </style>
+      <link href="styles/main.css" rel="stylesheet">
     </head>
     <body>
+      <div class="container">
         <!-- CHROME EXTENSION POPUP -->
-        <div id="repo-name">
-          <h5></h5>
+        <div class="header">
+          <h5 id="repo-name"></h5>
         </div>
-
-        <input type="text" id="filter" placeholder="Current Filter">
+        
+        <label for="filter">Filter Name</label>
+        <input type="text" id="filter" placeholder="Name to display">
 
         <button type="submit" id="add-filter">Add Filter</button>
 
-        <!-- build:js scripts/popup.js -->
-        <script src="bower_components/jquery/jquery.min.js"></script>
-        <script src="scripts/popup.js"></script>
-        <!-- endbuild -->
+        <div id="message-container">
+        </div>
+      </div>
+
+      <!-- build:js scripts/popup.js -->
+      <script src="scripts/popup.js"></script>
+      <!-- endbuild -->
     </body>
 </html>

@@ -1,42 +1,57 @@
 'use strict';
 
 function displayCurrentRepo (data) {
-  var $repoName = $('#repo-name h5'),
-    $filter = $('#filter'),
-    $filters = $('<ul/>'),
-    $item,
-    $label,
-    values,
-    value,
-    filter;
+  var $repoName = document.querySelector('#repo-name'),
+    $filter = document.querySelector('#filter'),
+    $params = document.createElement('span'),
+    $addFilter = document.querySelector('#add-filter');
 
-  $repoName.text(data.pageName);
-  //$filter.val(data.params);
-  filter = paramsToObj(data.params);
+  $repoName.textContent = data.pageName;
+  $params.id = 'filter-param';
+  $params.textContent = data.params;
+  data.label = $filter.value;
 
-  for(var key in filter) { 
-    if (filter.hasOwnProperty(key)) { 
-      if (filter[key].indexOf(',') !== -1) {
-        values = filter[key].split(',');
+  insertAfter($filter, $params);
+  $addFilter.addEventListener('click', addFilter(data));
+}
 
-        for (var v in values) {
-          values[v] = '"' + values[v] + '"';
-        }
+function addFilter (data) {
+  return function () {
+    var id = 'bb-filters:' + data.pageName;
 
-        value = values.join(' or ');
-      }
-      else {
-        value = filter[key];
+    chrome.storage.sync.get(id, function (filters) {
+      var projectFilters = filters[id];
+
+      if (!(projectFilters instanceof Array)) {
+        projectFilters = [];
       }
 
-      $label = $('<span/>').addClass('label').text(key + ':');
-      $item = $('<li/>').text(value);
-      $item.prepend($label);
-      $filters.append($item);
-    } 
-  }
+      projectFilters.push({ label: data.label, params: data.params });
+      filters[id] = projectFilters;
 
-  $filter.after($filters);
+      chrome.storage.sync.set(filters, function () {
+        // Notify that we saved.
+        message('Filter Saved');
+      });
+    });
+  };
+}
+
+function message (message) {
+  var $container = document.querySelector('#message-container'),
+    $message = document.createElement('p');
+
+  $message.className = 'message';
+  $message.textContent = message;
+
+  $container.appendChild($message);
+  setTimeout(function () {
+    $container.removeChild($message);  
+  }, 3500);
+}
+
+function insertAfter (referenceNode, newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 function paramsToObj(params, joinDuplicates) {
@@ -94,15 +109,5 @@ chrome.tabs.query({ active: true }, function (tabResults) {
         }.bind({ params: params }));
       }
     }
-  }
-});
-
-
-chrome.extension.onMessage.addListener(function(request, sender) {
-  console.log('on request');
-  if (request.action == 'getPageData') {
-    displayCurrentRepo(request.pageName);
-  }
-  else {
   }
 });

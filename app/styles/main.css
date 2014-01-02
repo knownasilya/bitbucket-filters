@@ -1,9 +1,26 @@
 /* Will be compiled down to a single stylesheet with your sass files */
 
+* {
+  box-sizing: border-box;
+}
+
 html {
-    /* Defaults css for cssmin process */
+  /* Defaults css for cssmin process */
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+h5 {
+  margin: 0.3em 0.2em;
+}
+
+input {
+  width: 100%;
 }
 
 #custom-filters-toolbar {
   margin-left: 9.1em;
+}
+
+.message {
+  color: #4AB280;
 }
