@@ -25,11 +25,13 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         yeoman: yeomanConfig,
+
         watch: {
             options: {
                 spawn: false
             }
         },
+
         connect: {
             options: {
                 port: 9000,
@@ -47,6 +49,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         clean: {
             dist: {
                 files: [{
@@ -60,6 +63,22 @@ module.exports = function (grunt) {
             },
             server: '.tmp'
         },
+
+        handlebars: {
+          compile: {
+            options: {
+              namespace: 'JST',
+              processName: function(filePath) { // input:  templates/_header.hbs
+                  var pieces = filePath.split('/');
+                  return pieces[pieces.length - 1].replace('.hbs', ''); // output: _header.hbs
+              }
+            },
+            files: {
+                'app/scripts/templates.js': 'app/templates/*.hbs',
+            }
+          }
+        },
+
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -185,6 +204,7 @@ module.exports = function (grunt) {
             test: [
             ],
             dist: [
+                'handlebars',
                 'imagemin',
                 'svgmin',
                 'htmlmin'

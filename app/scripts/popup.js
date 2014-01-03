@@ -37,18 +37,6 @@ function addFilter (data) {
   };
 }
 
-function message (message) {
-  var $container = document.querySelector('#message-container'),
-    $message = document.createElement('p');
-
-  $message.className = 'message';
-  $message.textContent = message;
-
-  $container.appendChild($message);
-  setTimeout(function () {
-    $container.removeChild($message);  
-  }, 3500);
-}
 
 function insertAfter (referenceNode, newNode) {
   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
