@@ -3,6 +3,7 @@
 var repoName = getRepoName(),
   appId = 'bb-filters',
   projectId = appId + ':' + repoName,
+  currentFilter,
   params = [];
 
 // Executed at bottom of file
@@ -35,7 +36,7 @@ function addSaveSearchBtn($issuesQuery) {
 
   $issuesQuery.querySelector('#bb-save-search').addEventListener('click', function (event) {
     var $filterContainer = document.querySelector('#filters');
-    var name = prompt('What would you like to call this filter?');
+    var name = prompt('What would you like to call this filter?', currentFilter || null);
 
     if ($filterContainer && name) {
       params = [];
@@ -86,7 +87,7 @@ function serializeParams(params) {
     var selections = params[key];
 
     return selections.map(function (selection) {
-      return encodeURIComponent(key) + '=' + encodeURIComponent(selection.modifier + selection.value);
+      return encodeURIComponent(key) + '=' + selection.modifier + selection.value;
     }).join('&');
   }).join('&'));
 }
@@ -153,9 +154,7 @@ function createFilterList(filters) {
     $toolbar = document.createElement('div'),
     $container = document.createElement('div'),
     $label = document.createElement('p'),
-    $openFormBtn = document.createElement('button'),
     toolbarId = 'bb-custom-filters-toolbar',
-    $form,
     $filterList;
 
   $toolbar.id = toolbarId;
@@ -170,7 +169,7 @@ function createFilterList(filters) {
   $toolbar.appendChild($container);
   
   // Add our toolbar to page
-  if (!document.querySelector('#' + toolbarId)) {
+  if (!document.querySelector('#' + toolbarId) && filters[repoName] && filters[repoName].length) {
     insertAfter($originalToolbar, $toolbar);
   }
 
@@ -202,6 +201,7 @@ function createFilterListItems(repoName, filters) {
         if (isQueryPage) {
           if (currentUrl.length === 2 && currentUrl[1] === filter.params) {
             isPressed = true;
+            currentFilter = filter.name;
           }
           
           $filter = createDropdownLabel($filter, filter, isPressed);
@@ -210,6 +210,7 @@ function createFilterListItems(repoName, filters) {
         else {
           if (currentUrl.length === 2 && currentUrl[1] === filter.params) {
             isPressed = true;
+            currentFilter = filter.name;
           }
           
           $filter = createSimpleLabel($filter, filter, isPressed);
@@ -232,12 +233,13 @@ function createDropdownLabel($parent, filter, isPressed) {
   var $editLink = document.createElement('a');
   var $delete = document.createElement('li');
   var $deleteLink = document.createElement('a');
+  var name = filter.name ? filter.name : 'unknown';
 
-  $splitBtn.id = 'filter-' + filter.name.toLowerCase();
+  $splitBtn.id = 'filter-' + name.toLowerCase();
   $splitBtn.className = 'aui-buttons';
 
   $btn.className = 'aui-button aui-button-compact aui-button-split-main';
-  $btn.textContent = filter.name;
+  $btn.textContent = name;
   $btn.addEventListener('click', function (event) {
     window.open('http://bitbucket.org/' + repoName + '/issues?' + filter.params, '_self');
     event.preventDefault();
@@ -250,13 +252,13 @@ function createDropdownLabel($parent, filter, isPressed) {
   }
 
   $moreBtn.className = 'aui-button aui-button-compact aui-dropdown2-trigger aui-button-split-more';
-  $moreBtn.setAttribute('aria-owns', 'filter-' + filter.name.toLowerCase() + '-dropdown');
+  $moreBtn.setAttribute('aria-owns', 'filter-' + name.toLowerCase() + '-dropdown');
   $moreBtn.setAttribute('aria-haspopup', 'true');
   $moreBtn.textContent = 'more btn';
 
-  $dropdown.id = 'filter-' + filter.name.toLowerCase() + '-dropdown'; 
+  $dropdown.id = 'filter-' + name.toLowerCase() + '-dropdown'; 
   $dropdown.className = 'aui-dropdown2 aui-style-default';
-  $dropdown.setAttribute('data-container', 'filter-' + filter.name.toLowerCase());
+  $dropdown.setAttribute('data-container', 'filter-' + name.toLowerCase());
 
   $list.className = 'aui-list-truncate';
 
