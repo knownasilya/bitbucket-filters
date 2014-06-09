@@ -1,6 +1,9 @@
 {
   "name": "bitbucket-issue-filters",
   "version": "0.0.0",
+  "scripts": {
+    "test": "goat -e test/mock-query.html" 
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",

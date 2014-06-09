@@ -1,1 +1,0 @@
-"use strict";chrome.runtime.onInstalled.addListener(function(a){console.log("previousVersion",a.previousVersion)}),chrome.tabs.onUpdated.addListener(function(a){chrome.pageAction.show(a)}),chrome.extension.onRequest.addListener(function(a,b,c){"getOptions"==a.method?c({assignee:localStorage.assignee}):c({})});
