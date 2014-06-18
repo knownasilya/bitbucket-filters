@@ -7,7 +7,7 @@ can be found in the [app store][extension].
 
 If you're thankful for this extension, I'd appreciate a [gittip][1] :wink:
 
-## Using
+## Usage
 
 ### Adding Filter
 To add a filter, go to Issues > Advanced Search, select your options, then press the "Save & Search" button.
