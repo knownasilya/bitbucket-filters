@@ -1,9 +1,9 @@
 Bitbucket-Issue-Filters
 =======================
 
-Chrome Extension for adding custom filters to Bitbucket Issues.
+Chrome Extension for adding custom filters to Bitbucket Issues,
+can be found in the [app store][extension].
 
-Extension can be found [here][extension].
 
 If you're thankful for this extension, I'd appreciate a [gittip][1] :wink:
 
