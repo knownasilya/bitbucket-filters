@@ -24,3 +24,10 @@ input {
 #bb-custom-filters-toolbar .filter-container {
   margin-bottom: 5px;
 }
+
+#bb-custom-filters-toolbar .filter-container .filter-control {
+  float: left;
+  margin: 0;
+  padding: 3px 0;
+  list-style: none;
+}

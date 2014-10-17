@@ -36,7 +36,7 @@ function addSaveSearchBtn($issuesQuery) {
 
   $issuesQuery.querySelector('#bb-save-search').addEventListener('click', function (event) {
     var $filterContainer = document.querySelector('#filters');
-    var name = prompt('What would you like to call this filter?', currentFilter || null);
+    var name = prompt('What would you like to call this filter?', currentFilter || '');
 
     if ($filterContainer && name) {
       params = [];
@@ -97,7 +97,7 @@ function addFilter(repoName, data, cb) {
     var repoFilters = filters[repoName];
 
     if (!(repoFilters instanceof Array)) {
-      projectFilters = [];
+      repoFilters = [];
     }
 
     updateFilter(repoFilters, { name: data.name, params: data.params }, data.deleteMe, function (repoFilters) {
