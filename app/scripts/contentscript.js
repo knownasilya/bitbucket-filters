@@ -190,7 +190,7 @@ function createFilterListItems(repoName, filters) {
     isQueryPage = hostSplit[hostSplit.length - 1] === 'query' ? true : false,
     isPressed = false;
 
-  $filters.className = 'filter-control';
+  $filters.className = 'filter-status';
 
   if (repoFilters) {
     repoFilters.forEach(function (filter) {
