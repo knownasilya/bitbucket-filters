@@ -32,7 +32,7 @@ function addSaveSearchBtn($issuesQuery) {
   $saveSearchBtn.id = 'bb-save-search';
   $saveSearchBtn.setAttribute('type', 'button');
   $saveSearchBtn.className = 'aui-button aui-style aui-button-primary';
-  $searchBtn.insertAdjacentHTML('afterend', $saveSearchBtn.outerHTML); 
+  $searchBtn.insertAdjacentHTML('afterend', $saveSearchBtn.outerHTML);
 
   $issuesQuery.querySelector('#bb-save-search').addEventListener('click', function (event) {
     var $filterContainer = document.querySelector('#filters');
@@ -60,12 +60,24 @@ function parseFilter($filter) {
     var availableParams = params[name];
     var numParams = availableParams ? availableParams.length : 0;
     var $modifierSelect = $filter.querySelector('.filter-comp select[name=comp_' + name + (numParams + 1) + ']');
-    var $valueSelect = $filter.querySelector('.filter-query select[name=' + name + (numParams + 1) + ']');
+    var $valueElement = $filter.querySelector('.filter-query select[name=' + name + (numParams + 1) + ']');
+    var isSelect = !!$valueElement;
 
-    if ($modifierSelect && $valueSelect) {
+    if (!isSelect) {
+      $valueElement = $filter.querySelector('.filter-query input[name=' + name + (numParams + 1) + ']');
+    }
+
+    if ($modifierSelect && $valueElement) {
       var modifier = $modifierSelect.selectedOptions[0].value;
-      var value = $valueSelect.selectedOptions[0].value;
-      
+      var value;
+
+      if (isSelect) {
+        value = $valueElement.selectedOptions[0].value;
+      }
+      else {
+        value = $valueElement.value;
+      }
+
       if (!params[name]) {
         params[name] = [{
           modifier: modifier,
@@ -119,7 +131,7 @@ function updateFilter(filters, filter, deleteMe, cb) {
   var exists = filters.filter(function (item) {
     return item && item.name === filter.name;
   }).length > 0;
-  
+
   if (exists) {
     if (confirm(deleteMe ? 'Are you sure you want to delete this filter?' : 'There appears to already exist a \'' + filter.name + '\' filter, would you like to overwrite it?')) {
       return cb(filters.map(function (item) {
@@ -138,7 +150,7 @@ function updateFilter(filters, filter, deleteMe, cb) {
     }
   }
   else {
-    filters.push(filter); 
+    filters.push(filter);
     cb(filters);
   }
 }
@@ -164,10 +176,10 @@ function createFilterList(filters) {
 
   $filterList = createFilterListItems(repoName, filters);
 
-  $container.appendChild($label); 
-  $container.appendChild($filterList); 
+  $container.appendChild($label);
+  $container.appendChild($filterList);
   $toolbar.appendChild($container);
-  
+
   // Add our toolbar to page
   if (!document.querySelector('#' + toolbarId) && filters[repoName] && filters[repoName].length) {
     insertAfter($originalToolbar, $toolbar);
@@ -203,7 +215,7 @@ function createFilterListItems(repoName, filters) {
             isPressed = true;
             currentFilter = filter.name;
           }
-          
+
           $filter = createDropdownLabel($filter, filter, isPressed);
           $filters.appendChild($filter);
         }
@@ -212,7 +224,7 @@ function createFilterListItems(repoName, filters) {
             isPressed = true;
             currentFilter = filter.name;
           }
-          
+
           $filter = createSimpleLabel($filter, filter, isPressed);
           $filters.appendChild($filter);
         }
@@ -256,14 +268,14 @@ function createDropdownLabel($parent, filter, isPressed) {
   $moreBtn.setAttribute('aria-haspopup', 'true');
   $moreBtn.textContent = 'more btn';
 
-  $dropdown.id = 'filter-' + name.toLowerCase() + '-dropdown'; 
+  $dropdown.id = 'filter-' + name.toLowerCase() + '-dropdown';
   $dropdown.className = 'aui-dropdown2 aui-style-default';
   $dropdown.setAttribute('data-container', 'filter-' + name.toLowerCase());
 
   $list.className = 'aui-list-truncate';
 
   $editLink.textContent = 'Edit';
-  $editLink.setAttribute('href', 'http://bitbucket.org/' + repoName + '/issues/query?' + filter.params); 
+  $editLink.setAttribute('href', 'http://bitbucket.org/' + repoName + '/issues/query?' + filter.params);
   $editLink.addEventListener('click', function (event) {
     var $this = event.target;
     // TODO: save name, for saving filter.
