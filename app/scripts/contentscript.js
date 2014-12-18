@@ -56,7 +56,7 @@ function addSaveSearchBtn($issuesQuery) {
 
 function parseFilter($filter) {
   if ($filter.className.indexOf('filter_') > -1) {
-    var name = $filter.className.split('_')[1];
+    var name = $filter.className.replace('filter_', '');
     var availableParams = params[name];
     var numParams = availableParams ? availableParams.length : 0;
     var $modifierSelect = $filter.querySelector('.filter-comp select[name=comp_' + name + (numParams + 1) + ']');
